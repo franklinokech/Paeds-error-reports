@@ -1,0 +1,140 @@
+.env
+.env.*
+!.env.example
+renv/library/
+renv/staging/
+renv/cache/
+renv/
+tmp/
+*.R~
+.Rhistory
+.RData
+.Rproj.user/
+.git/
+# ---------------------------------------------------------------
+# Secrets — never commit these
+# ---------------------------------------------------------------
+.env
+.env.*
+!.env.example
+
+# ---------------------------------------------------------------
+# Editor / OS junk
+# ---------------------------------------------------------------
+*~
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# ---------------------------------------------------------------
+# R session artefacts
+# ---------------------------------------------------------------
+.Rhistory
+.Rapp.history
+.RData
+.Ruserdata
+.Rproj.user/
+
+# ---------------------------------------------------------------
+# renv library — contains symlinks to /home/hsu/.cache/... which
+# are broken on every other machine. The lockfile is what matters.
+# Keep renv/activate.R and renv/settings.json (see exceptions).
+# ---------------------------------------------------------------
+renv/library/
+renv/staging/
+renv/cache/
+renv/local/
+renv/sandbox/
+renv/python/
+
+!renv/activate.R
+!renv/settings.json
+!renv/.gitignore
+
+# ---------------------------------------------------------------
+# Logs
+# ---------------------------------------------------------------
+*.log
+snowflake.log
+
+# ---------------------------------------------------------------
+# Report output — contains patient identifiers (RecordID, etc.)
+# ---------------------------------------------------------------
+tmp/
+tmp/*.csv
+
+# ---------------------------------------------------------------
+# Data files
+# ---------------------------------------------------------------
+# dats.csv contains patient data — keep it on the host, bind-mount
+# it into the container at runtime (see docker-compose.yml).
+dats.csv
+
+# ---------------------------------------------------------------
+# Docker / IDE extras
+# ---------------------------------------------------------------
+.docker/
+.idea/
+.vscode/
+*.code-workspace
+
+
+# ---------------------------------------------------------------
+# Secrets
+# ---------------------------------------------------------------
+.env
+.env.*
+!.env.example
+
+# ---------------------------------------------------------------
+# Editor / OS junk
+# ---------------------------------------------------------------
+*~
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# ---------------------------------------------------------------
+# R session artefacts
+# ---------------------------------------------------------------
+.Rhistory
+.Rapp.history
+.RData
+.Ruserdata
+.Rproj.user/
+
+# ---------------------------------------------------------------
+# renv library — contains symlinks to host cache
+# Keep renv/activate.R and renv/settings.json
+# ---------------------------------------------------------------
+renv/library/
+renv/staging/
+renv/cache/
+renv/local/
+renv/sandbox/
+renv/python/
+
+!renv/activate.R
+!renv/settings.json
+!renv/.gitignore
+
+# ---------------------------------------------------------------
+# Logs
+# ---------------------------------------------------------------
+*.log
+snowflake.log
+
+# ---------------------------------------------------------------
+# Report output
+# ---------------------------------------------------------------
+tmp/
+tmp/*.csv
+
+# ---------------------------------------------------------------
+# Local backups
+# ---------------------------------------------------------------
+old-00-main.R
+0909_00-main.R
+*_00-main.R

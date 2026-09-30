@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Paeds Error Report
+GenericName=REDCap Paeds Data Validator
+Comment=Run the paediatric data-quality validation and open the report
+Exec=/home/bob/dev/cin/error-reports/run-report.sh
+Path=/home/bob/dev/cin/error-reports
+Icon=utilities-terminal
+Terminal=true
+Categories=Utility;Office;
+StartupNotify=true

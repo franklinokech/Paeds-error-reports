@@ -1,0 +1,76 @@
+services:
+  paeds-reports:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        GITHUB_PAT: ${GITHUB_PAT}
+    image: paeds-reports:dev
+    container_name: paeds-reports
+    working_dir: /app
+    user: "${UID:-1000}:${GID:-1000}"
+
+    environment:
+      PROJECT_ROOT: /app
+
+      REDCAP_API_URL:   ${REDCAP_API_URL}
+      REDCAP_API_TOKEN: ${REDCAP_API_TOKEN}
+      ID_VAR:           ${ID_VAR}
+      DATE_VAR:         ${DATE_VAR}
+      HOSP_VAR:         ${HOSP_VAR}
+      SURROGATE_ID_VAR: ${SURROGATE_ID_VAR}
+
+      REPORT_INTERVAL:  ${REPORT_INTERVAL}
+      HOSP_TO_VALIDATE: ${HOSP_TO_VALIDATE}
+
+      LOCAL:            ${LOCAL}
+      CHUNKED:          ${CHUNKED}
+      CHUNK_SIZE:       ${CHUNK_SIZE}
+
+      R_WORKERS:        ${R_WORKERS:-2}
+
+      RENV_CONFIG_CACHE_ENABLED: "TRUE"
+      RENV_PATHS_CACHE:          /renv-cache
+      RENV_PATHS_LIBRARY:        /renv-library
+      RENV_CONFIG_SANDBOX_ENABLED: "FALSE"
+
+      R_LIBS: /renv-library
+
+    volumes:
+      - ./00-main.R:/app/00-main.R
+      - ./custom.R:/app/custom.R
+      - ./exclude.R:/app/exclude.R
+      - ./validation.R:/app/validation.R
+      - ./TestErrors.R:/app/TestErrors.R
+      - ./unmatched_ids_check.R:/app/unmatched_ids_check.R
+      - ./upd.csv:/app/upd.csv
+      - ./renv.lock:/app/renv.lock:ro
+
+      - renv-library:/renv-library
+      - renv-cache:/renv-cache
+
+      - ./tmp:/app/tmp
+
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 4g
+
+    develop:
+      watch:
+        - action: sync+restart
+          path: .
+          target: /app
+          ignore:
+            - renv/
+            - .git/
+            - tmp/
+        - action: rebuild
+          path: renv.lock
+
+    command: ["Rscript", "00-main.R"]
+
+volumes:
+  renv-library:
+  renv-cache:
